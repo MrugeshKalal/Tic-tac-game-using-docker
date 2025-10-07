@@ -1,218 +1,232 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tic-Tac-Toe Game</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            text-align: center;
-            margin: 0;
-            padding: 0;
-            background: linear-gradient(135deg, #f0f4ff, #dbeafe);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tic-Tac-Toe Game</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #f0f4ff, #dbeafe);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
 
-        .container {
-            background: #ffffff;
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
-        }
+    .container {
+      background: #ffffff;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+    }
 
-        h1 {
-            color: #333;
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-        }
+    h1 {
+      color: #333;
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+    }
 
-        .board {
-            display: grid;
-            grid-template-columns: repeat(3, 120px);
-            grid-template-rows: repeat(3, 120px);
-            gap: 10px;
-            justify-content: center;
-            margin-top: 20px;
-        }
+    .board {
+      display: grid;
+      grid-template-columns: repeat(3, 120px);
+      grid-template-rows: repeat(3, 120px);
+      gap: 10px;
+      justify-content: center;
+      margin-top: 20px;
+    }
 
-        .cell {
-            width: 120px;
-            height: 120px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
-            font-weight: bold;
-            background: #f8fafc;
-            border-radius: 15px;
-            box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
+    .cell {
+      width: 120px;
+      height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      font-weight: bold;
+      background: #f8fafc;
+      border-radius: 15px;
+      box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
 
-        .cell:hover {
-            background: #e0f2fe;
-            transform: scale(1.05);
-        }
+    .cell:hover {
+      background: #e0f2fe;
+      transform: scale(1.05);
+    }
 
-        .cell.x {
-            color: #2563eb; /* Blue for X */
-        }
+    .cell.x {
+      color: #2563eb; /* Blue for X */
+    }
 
-        .cell.o {
-            color: #dc2626; /* Red for O */
-        }
+    .cell.o {
+      color: #dc2626; /* Red for O */
+    }
 
-        .winner {
-            margin-top: 20px;
-            font-size: 1.6rem;
-            font-weight: bold;
-            color: #16a34a;
-        }
+    .winner {
+      margin-top: 20px;
+      font-size: 1.6rem;
+      font-weight: bold;
+      color: #16a34a;
+    }
 
-        #scoreboard {
-            margin-top: 20px;
-            font-size: 1.2rem;
-            color: #374151;
-        }
+    #scoreboard {
+      margin-top: 20px;
+      font-size: 1.2rem;
+      color: #374151;
+    }
 
-        #scoreboard p {
-            margin: 5px 0;
-        }
+    #scoreboard p {
+      margin: 5px 0;
+    }
 
-        button {
-            margin: 12px;
-            padding: 12px 25px;
-            font-size: 1.1rem;
-            border: none;
-            border-radius: 12px;
-            background: #2563eb;
-            color: white;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.3s;
-        }
+    button {
+      margin: 12px;
+      padding: 12px 25px;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 12px;
+      background: #2563eb;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
 
-        button:hover {
-            background: #1d4ed8;
-            transform: scale(1.05);
-        }
-    </style>
+    button:hover {
+      background: #1d4ed8;
+      transform: scale(1.05);
+    }
+  </style>
 </head>
+
 <body>
-    <div class="container">
-        <h1>Tic-Tac-Toe</h1>
-        <div class="board" id="board"></div>
-        <div class="winner" id="winner"></div>
+  <div class="container">
+    <h1>Tic-Tac-Toe</h1>
+    <div class="board" id="board"></div>
+    <div class="winner" id="winner"></div>
 
-        <!-- Scoreboard -->
-        <div id="scoreboard">
-            <p>X Wins: <span id="xWins">0</span></p>
-            <p>O Wins: <span id="oWins">0</span></p>
-        </div>
-
-        <!-- Buttons -->
-        <button onclick="resetGame()">🔄 Reset Game</button>
-        <button onclick="newGame()">🆕 New Game</button>
+    <!-- Scoreboard -->
+    <div id="scoreboard">
+      <p>X Wins: <span id="xWins">0</span></p>
+      <p>O Wins: <span id="oWins">0</span></p>
     </div>
 
-    <script>
-        const board = document.getElementById("board");
-        const winnerDisplay = document.getElementById("winner");
-        let currentPlayer = "X";
-        let gameBoard = ["", "", "", "", "", "", "", "", ""];
+    <!-- Buttons -->
+    <button onclick="resetGame()">🔄 Reset Game</button>
+    <button onclick="newGame()">🆕 New Game</button>
+  </div>
 
-        // Win counters
-        let xWins = 0;
-        let oWins = 0;
+  <script>
+    const board = document.getElementById("board");
+    const winnerDisplay = document.getElementById("winner");
+    let currentPlayer = "X";
+    let gameBoard = ["", "", "", "", "", "", "", "", ""];
 
-        function checkWinner() {
-            const winPatterns = [
-                [0, 1, 2], [3, 4, 5], [6, 7, 8],
-                [0, 3, 6], [1, 4, 7], [2, 5, 8],
-                [0, 4, 8], [2, 4, 6]
-            ];
-            
-            for (let pattern of winPatterns) {
-                const [a, b, c] = pattern;
-                if (gameBoard[a] && gameBoard[a] === gameBoard[b] && gameBoard[a] === gameBoard[c]) {
-                    winnerDisplay.textContent = `${gameBoard[a]} Wins!`;
-                    board.childNodes.forEach(cell => cell.style.pointerEvents = "none");
+    // Win counters
+    let xWins = 0;
+    let oWins = 0;
 
-                    // Highlight winning cells
-                    pattern.forEach(i => {
-                        board.childNodes[i].style.background = "#bbf7d0"; // light green
-                    });
+    function checkWinner() {
+      const winPatterns = [
+        [0,1,2],[3,4,5],[6,7,8],
+        [0,3,6],[1,4,7],[2,5,8],
+        [0,4,8],[2,4,6]
+      ];
 
-                    // Update win counters
-                    if (gameBoard[a] === "X") xWins++;
-                    else if (gameBoard[a] === "O") oWins++;
+      for (let pattern of winPatterns) {
+        const [a,b,c] = pattern;
+        if (gameBoard[a] && gameBoard[a] === gameBoard[b] && gameBoard[a] === gameBoard[c]) {
+          winnerDisplay.textContent = `${gameBoard[a]} Wins!`;
+          board.childNodes.forEach(cell => cell.style.pointerEvents = "none");
 
-                    updateScoreboard();
-                    return true;
-                }
-            }
+          // Highlight winning cells
+          pattern.forEach(i => board.childNodes[i].style.background = "#bbf7d0");
 
-            if (!gameBoard.includes("")) {
-                winnerDisplay.textContent = "It's a Draw!";
-                return true;
-            }
+          // Update frontend win counters
+          if (gameBoard[a] === "X") xWins++;
+          else if (gameBoard[a] === "O") oWins++;
+          updateScoreboard();
 
-            return false;
+          // Notify backend for Prometheus
+          fetch('/game-over', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ winner: gameBoard[a] })
+          });
+
+          return true;
         }
+      }
 
-        function handleClick(index) {
-            if (!gameBoard[index] && !winnerDisplay.textContent) {
-                gameBoard[index] = currentPlayer;
-                renderBoard();
-                if (!checkWinner()) {
-                    currentPlayer = currentPlayer === "X" ? "O" : "X";
-                }
-            }
-        }
+      if (!gameBoard.includes("")) {
+        winnerDisplay.textContent = "It's a Draw!";
 
-        function renderBoard() {
-            board.innerHTML = "";
-            gameBoard.forEach((value, index) => {
-                const cell = document.createElement("div");
-                cell.classList.add("cell");
-                if (value === "X") cell.classList.add("x");
-                if (value === "O") cell.classList.add("o");
-                cell.textContent = value;
-                cell.onclick = () => handleClick(index);
-                board.appendChild(cell);
-            });
-        }
+        // Notify backend for Prometheus
+        fetch('/game-over', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ winner: 'draw' })
+        });
 
-        function updateScoreboard() {
-            document.getElementById('xWins').textContent = xWins;
-            document.getElementById('oWins').textContent = oWins;
-        }
+        return true;
+      }
 
-        function resetGame() {
-            gameBoard = ["", "", "", "", "", "", "", "", ""];
-            winnerDisplay.textContent = "";
-            currentPlayer = "X";
-            board.childNodes.forEach(cell => {
-                cell.style.pointerEvents = "auto";
-                cell.style.background = "#f8fafc"; // reset background
-            });
-            renderBoard();
-        }
+      return false;
+    }
 
-        function newGame() {
-            // Reset everything including scoreboard
-            xWins = 0;
-            oWins = 0;
-            updateScoreboard();
-            resetGame();
-        }
-
+    function handleClick(index) {
+      if (!gameBoard[index] && !winnerDisplay.textContent) {
+        gameBoard[index] = currentPlayer;
         renderBoard();
-    </script>
+        if (!checkWinner()) {
+          currentPlayer = currentPlayer === "X" ? "O" : "X";
+        }
+      }
+    }
+
+    function renderBoard() {
+      board.innerHTML = "";
+      gameBoard.forEach((value, index) => {
+        const cell = document.createElement("div");
+        cell.classList.add("cell");
+        if (value === "X") cell.classList.add("x");
+        if (value === "O") cell.classList.add("o");
+        cell.textContent = value;
+        cell.onclick = () => handleClick(index);
+        board.appendChild(cell);
+      });
+    }
+
+    function updateScoreboard() {
+      document.getElementById('xWins').textContent = xWins;
+      document.getElementById('oWins').textContent = oWins;
+    }
+
+    function resetGame() {
+      gameBoard = ["", "", "", "", "", "", "", "", ""];
+      winnerDisplay.textContent = "";
+      currentPlayer = "X";
+      board.childNodes.forEach(cell => {
+        cell.style.pointerEvents = "auto";
+        cell.style.background = "#f8fafc";
+      });
+      renderBoard();
+    }
+
+    function newGame() {
+      xWins = 0;
+      oWins = 0;
+      updateScoreboard();
+      resetGame();
+    }
+
+    // Initial render
+    renderBoard();
+  </script>
 </body>
 </html>
